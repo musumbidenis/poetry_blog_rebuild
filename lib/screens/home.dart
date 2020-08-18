@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:poetry_blog_rebuild/data/data.dart';
+import 'package:poetry_blog_rebuild/models/models.dart';
 import 'package:poetry_blog_rebuild/widgets/widgets.dart';
 
 class Home extends StatefulWidget {
@@ -10,6 +12,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(statusBarColor: Colors.white));
     return Scaffold(
       body: CustomScrollView(slivers: [
         SliverAppBar(
@@ -56,7 +60,15 @@ class _HomeState extends State<Home> {
               posts: posts,
             ),
           ),
-        )
+        ),
+        SliverList(
+            delegate: SliverChildBuilderDelegate(
+          (context, index) {
+            final Post post = posts[index];
+            return PostContainer(post: post);
+          },
+          childCount: posts.length,
+        )),
       ]),
     );
   }

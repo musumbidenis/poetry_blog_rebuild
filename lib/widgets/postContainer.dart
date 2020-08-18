@@ -15,7 +15,7 @@ class PostContainer extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 8.0),
         height: 300.0,
         decoration: new BoxDecoration(
-            color: Colors.white, //new Color.fromRGBO(255, 0, 0, 0.0),
+            color: Colors.white,
             borderRadius: new BorderRadius.only(
               topLeft: const Radius.circular(10.0),
               topRight: const Radius.circular(10.0),

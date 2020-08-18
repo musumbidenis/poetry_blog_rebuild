@@ -9,7 +9,6 @@ class Navigation extends StatefulWidget {
 class _NavigationState extends State<Navigation> {
   int _selectedIndex = 0;
   Widget _currentScreen = Home();
-  bool _isActive = false;
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +28,11 @@ class _NavigationState extends State<Navigation> {
                     setState(() {
                       _selectedIndex = 0;
                       _currentScreen = Home();
-                      _isActive = true;
                     });
                   }),
               IconButton(
                   iconSize: 30.0,
-                  icon: Icon(Icons.settings,
+                  icon: Icon(Icons.account_circle,
                       color: _selectedIndex == 1
                           ? Colors.pinkAccent
                           : Colors.grey),
@@ -42,16 +40,9 @@ class _NavigationState extends State<Navigation> {
                     setState(() {
                       _selectedIndex = 1;
                       _currentScreen = Profile();
-                      _isActive = true;
                     });
                   })
             ],
-            indicator: BoxDecoration(
-                border: Border(
-                    top: BorderSide(
-              color: _isActive ? Colors.pinkAccent : Colors.grey,
-              width: 3.0,
-            ))),
             indicatorColor: Colors.transparent,
           )),
     );

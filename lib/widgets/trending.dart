@@ -13,7 +13,7 @@ class Trending extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 18.0, top: 20.0, bottom: 5.0),
+          padding: const EdgeInsets.only(left: 28.0, top: 20.0, bottom: 5.0),
           child: Text(
             "Trending",
             style: TextStyle(fontSize: 25.0),

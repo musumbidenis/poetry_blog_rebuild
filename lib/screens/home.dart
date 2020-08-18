@@ -44,14 +44,18 @@ class _HomeState extends State<Home> {
           elevation: 0,
           actions: [
             Container(
-              margin: const EdgeInsets.all(6.0),
+              width: 70.0,
               decoration: BoxDecoration(
                 color: Colors.grey[100],
-                shape: BoxShape.circle,
+                shape: BoxShape.rectangle,
+                borderRadius: new BorderRadius.only(
+                  topLeft: const Radius.circular(30.0),
+                  bottomLeft: const Radius.circular(30.0),
+                ),
               ),
               child: IconButton(
                 icon: Icon(Icons.search),
-                iconSize: 30.0,
+                iconSize: 35.0,
                 color: Colors.pinkAccent,
                 onPressed: () {},
               ),

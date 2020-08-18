@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:poetry_blog_rebuild/data/data.dart';
@@ -5,6 +6,9 @@ import 'package:poetry_blog_rebuild/models/models.dart';
 import 'package:poetry_blog_rebuild/widgets/widgets.dart';
 
 class Home extends StatefulWidget {
+  final User currentUser;
+
+  const Home({Key key, this.currentUser}) : super(key: key);
   @override
   _HomeState createState() => _HomeState();
 }
@@ -23,6 +27,7 @@ class _HomeState extends State<Home> {
             padding: const EdgeInsets.all(8.0),
             child: CircleAvatar(
               backgroundColor: Colors.grey[200],
+              backgroundImage: CachedNetworkImageProvider(currentUser.imageUrl),
             ),
           ),
           title: Text(

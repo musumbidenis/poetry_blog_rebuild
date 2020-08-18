@@ -19,25 +19,28 @@ class Trending extends StatelessWidget {
             style: TextStyle(fontSize: 25.0),
           ),
         ),
-        Container(
-          height: 250.0,
-          child: ListView.builder(
-              padding: const EdgeInsets.symmetric(
-                vertical: 10.0,
-                horizontal: 8.0,
-              ),
-              scrollDirection: Axis.horizontal,
-              itemCount: posts.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 4.0,
-                  ),
-                  child: _PostCard(
-                    post: posts[index],
-                  ),
-                );
-              }),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18.0),
+          child: Container(
+            height: 250.0,
+            child: ListView.builder(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 10.0,
+                  horizontal: 8.0,
+                ),
+                scrollDirection: Axis.horizontal,
+                itemCount: posts.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 5.0,
+                    ),
+                    child: _PostCard(
+                      post: posts[index],
+                    ),
+                  );
+                }),
+          ),
         ),
       ],
     );

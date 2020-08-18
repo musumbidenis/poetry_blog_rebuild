@@ -32,14 +32,28 @@ class PostContainer extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.all(10.0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10.0),
-                child: CachedNetworkImage(
-                  imageUrl: post.imageUrl,
-                  height: 200.0,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
+              child: Stack(
+                overflow: Overflow.visible,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10.0),
+                    child: CachedNetworkImage(
+                      imageUrl: post.imageUrl,
+                      height: 200.0,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  // Positioned(
+                  //   child: CircleAvatar(
+                  //     radius: 30.0,
+                  //     backgroundImage:
+                  //         CachedNetworkImageProvider(post.user.imageUrl),
+                  //   ),
+                  //   right: 20.0,
+                  //   bottom: -25,
+                  // ),
+                ],
               ),
             ),
             Padding(

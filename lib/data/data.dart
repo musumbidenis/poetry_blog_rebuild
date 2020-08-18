@@ -175,16 +175,6 @@ final List<Post> posts = [
     shares: 96,
   ),
   Post(
-    user: onlineUsers[5],
-    caption:
-        'Please enjoy this placeholder text: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    timeAgo: '3hr',
-    imageUrl: null,
-    likes: 683,
-    comments: 79,
-    shares: 18,
-  ),
-  Post(
     user: onlineUsers[4],
     caption: 'This is a very good boi.',
     timeAgo: '8hr',
@@ -203,16 +193,6 @@ final List<Post> posts = [
     likes: 722,
     comments: 183,
     shares: 42,
-  ),
-  Post(
-    user: onlineUsers[0],
-    caption:
-        'More placeholder text for the soul: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    timeAgo: '1d',
-    imageUrl: null,
-    likes: 482,
-    comments: 37,
-    shares: 9,
   ),
   Post(
     user: onlineUsers[9],

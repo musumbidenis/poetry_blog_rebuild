@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:poetry_blog_rebuild/data/data.dart';
 import 'package:poetry_blog_rebuild/widgets/widgets.dart';
 
 class Home extends StatefulWidget {
@@ -48,8 +49,13 @@ class _HomeState extends State<Home> {
             ),
           ],
         ),
-        SliverToBoxAdapter(
-          child: Trending(),
+        SliverPadding(
+          padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0),
+          sliver: SliverToBoxAdapter(
+            child: Trending(
+              posts: posts,
+            ),
+          ),
         )
       ]),
     );

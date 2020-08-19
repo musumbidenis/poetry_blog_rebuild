@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:poetry_blog_rebuild/data/data.dart';
-import 'package:poetry_blog_rebuild/models/models.dart';
 
 class Profile extends StatelessWidget {
   @override

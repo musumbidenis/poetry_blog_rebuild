@@ -43,14 +43,10 @@ class _PostState extends State<Post> {
           SliverToBoxAdapter(
               child: Stack(
             children: <Widget>[
-              // The containers in the background
-              Column(
-                children: <Widget>[
-                  Container(
-                    height: MediaQuery.of(context).size.height * .30,
-                    color: Colors.blue,
-                  ),
-                ],
+              // The container in the background
+              Container(
+                height: MediaQuery.of(context).size.height * .30,
+                color: Colors.blue,
               ),
               // The card widget with top padding,
               // incase if you wanted bottom padding to work,
@@ -61,18 +57,35 @@ class _PostState extends State<Post> {
                     top: MediaQuery.of(context).size.height * .18,
                     right: 20.0,
                     left: 20.0),
-                child: Container(
-                  height: 200.0,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    color: Colors.red,
-                    shape: BoxShape.rectangle,
-                    borderRadius: new BorderRadius.only(
-                        topLeft: const Radius.circular(30.0),
-                        topRight: const Radius.circular(30.0),
-                        bottomLeft: const Radius.circular(30.0),
-                        bottomRight: const Radius.circular(15.0)),
-                  ),
+                child: Stack(
+                  overflow: Overflow.visible,
+                  children: [
+                    Container(
+                      height: 200.0,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        shape: BoxShape.rectangle,
+                        borderRadius: new BorderRadius.only(
+                            topLeft: const Radius.circular(15.0),
+                            topRight: const Radius.circular(15.0),
+                            bottomLeft: const Radius.circular(15.0),
+                            bottomRight: const Radius.circular(15.0)),
+                      ),
+                    ),
+                    Positioned(
+                      child: FloatingActionButton(
+                        child: Icon(Icons.add),
+                        onPressed: () {
+                          print('FAB tapped!');
+                        },
+                        backgroundColor: Colors.blueGrey,
+                      ),
+                      right: 0,
+                      left: 0,
+                      bottom: -26,
+                    ),
+                  ],
                 ),
               )
             ],

@@ -1,4 +1,3 @@
-import 'package:meta/meta.dart';
 import 'package:poetry_blog_rebuild/models/models.dart';
 
 class Post {

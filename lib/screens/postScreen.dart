@@ -63,12 +63,12 @@ class _PostState extends State<Post> {
                   child: Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(12.0),
-                          bottomRight: Radius.circular(12.0),
-                          topRight: Radius.circular(12.0),
-                          topLeft: Radius.circular(12.0)),
+                          bottomLeft: Radius.circular(5.0),
+                          bottomRight: Radius.circular(5.0),
+                          topRight: Radius.circular(5.0),
+                          topLeft: Radius.circular(5.0)),
                     ),
-                    elevation: 3.0,
+                    elevation: 1.0,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 28.0, horizontal: 25.0),

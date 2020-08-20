@@ -28,23 +28,32 @@ class _NavigationState extends State<Navigation> {
         elevation: 20.0,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home,
-              size: 30.0,
+            icon: Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Icon(
+                Icons.home,
+                size: 28.0,
+              ),
             ),
             title: Text(''),
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.add_box,
-              size: 35.0,
+            icon: Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Icon(
+                Icons.add_box,
+                size: 30.0,
+              ),
             ),
             title: Text(''),
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.account_circle,
-              size: 30.0,
+            icon: Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Icon(
+                Icons.account_circle,
+                size: 28.0,
+              ),
             ),
             title: Text(''),
           ),

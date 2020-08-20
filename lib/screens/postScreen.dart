@@ -70,13 +70,17 @@ class _PostState extends State<Post> {
                     ),
                     elevation: 1.0,
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 28.0, horizontal: 25.0),
+                      padding: const EdgeInsets.only(
+                        left: 30.0,
+                        right: 30.0,
+                        bottom: 30.0,
+                      ),
                       child: Wrap(
                         children: [
                           Center(
                             child: Padding(
-                              padding: const EdgeInsets.only(bottom: 18.0),
+                              padding: const EdgeInsets.only(
+                                  top: 20.0, bottom: 18.0),
                               child: Column(
                                 children: [
                                   CircleAvatar(
@@ -107,9 +111,37 @@ class _PostState extends State<Post> {
                                 Text(
                                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla feugiat enim orci, id rhoncus enim lacinia at. Duis eu turpis nibh. Nulla suscipit magna ultricies risus ultrices lobortis. Nunc pharetra nisi urna, cursus molestie enim pulvinar sed. In libero orci, porttitor vel risus sit amet, fermentum elementum leo. Nunc quis purus eget enim auctor mattis vitae ut arcu. Ut auctor sapien id nunc interdum, ac bibendum mauris consectetur. Vestibulum at tempor diam, sit amet consectetur libero. Vivamus ipsum sapien, gravida in augue sed, pulvinar finibus nunc. Suspendisse vulputate dapibus risus, sit amet pulvinar leo dapibus eget. Morbi eu blandit urna.  amet, consectetur adipiscing elit. Nulla feugiat enim orci, id rhoncus enim lacinia at. ",
                                     style: TextStyle(
-                                      fontSize: 18.0,
-                                    ),
+                                        fontSize: 16.0, letterSpacing: 0.5),
                                     textAlign: TextAlign.justify),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 18.0),
+                                  child: Row(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          IconButton(
+                                              icon: Icon(
+                                                Icons.favorite,
+                                                color: Colors.red,
+                                              ),
+                                              onPressed: null),
+                                          Text(377.toString())
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          IconButton(
+                                              icon: Icon(
+                                                Icons.mode_comment,
+                                                color: Colors.grey[400],
+                                              ),
+                                              onPressed: null),
+                                          Text(13.toString())
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ],
                             ),
                           ),
@@ -122,7 +154,36 @@ class _PostState extends State<Post> {
             ],
           )),
           SliverToBoxAdapter(
-            child: Text("data"),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 30.0),
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10.0,
+                  vertical: 10.0,
+                ),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey[400]),
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        CircleAvatar(),
+                        const SizedBox(width: 8.0),
+                        Expanded(
+                          child: TextField(
+                            decoration: InputDecoration.collapsed(
+                              hintText: 'Add a comment. . .',
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
           )
         ],
       ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:poetry_blog_rebuild/data/data.dart';
 import 'package:poetry_blog_rebuild/models/models.dart';
+import 'package:poetry_blog_rebuild/screens/screens.dart';
 import 'package:poetry_blog_rebuild/widgets/widgets.dart';
 
 class Home extends StatefulWidget {
@@ -74,7 +75,22 @@ class _HomeState extends State<Home> {
             delegate: SliverChildBuilderDelegate(
           (context, index) {
             final Post post = posts[index];
-            return PostContainer(post: post);
+            return InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PostScreen(
+                          postImageUrl: post.imageUrl,
+                          userImageUrl: post.user.imageUrl,
+                          title: post.caption,
+                          author: post.user.name,
+                          likes: post.likes,
+                          comments: post.comments,
+                        ),
+                      ));
+                },
+                child: PostContainer(post: post));
           },
           childCount: posts.length,
         )),

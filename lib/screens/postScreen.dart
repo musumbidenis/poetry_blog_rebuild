@@ -1,18 +1,27 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-class Post extends StatefulWidget {
-  final postImageUrl;
-  final userImageUrl;
-  final title;
+class PostScreen extends StatefulWidget {
+  final String postImageUrl, userImageUrl, title, author;
+  final int likes, comments;
 
-  const Post({Key key, this.postImageUrl, this.userImageUrl, this.title})
+  const PostScreen(
+      {Key key,
+      this.postImageUrl,
+      this.userImageUrl,
+      this.title,
+      this.author,
+      this.likes,
+      this.comments})
       : super(key: key);
 
   @override
-  _PostState createState() => _PostState();
+  _PostScreenState createState() => _PostScreenState();
 }
 
-class _PostState extends State<Post> {
+class Int {}
+
+class _PostScreenState extends State<PostScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,8 +56,7 @@ class _PostState extends State<Post> {
                 height: MediaQuery.of(context).size.height * .30,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: NetworkImage(
-                          'https://images.unsplash.com/photo-1496950866446-3253e1470e8e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80'),
+                      image: NetworkImage(widget.postImageUrl),
                       fit: BoxFit.cover),
                 ),
               ),
@@ -85,9 +93,11 @@ class _PostState extends State<Post> {
                                 children: [
                                   CircleAvatar(
                                     radius: 35.0,
+                                    backgroundImage: CachedNetworkImageProvider(
+                                        widget.userImageUrl),
                                   ),
                                   Text(
-                                    "Marcus Ng",
+                                    widget.author,
                                     style: TextStyle(
                                       fontSize: 15.0,
                                     ),
@@ -102,7 +112,7 @@ class _PostState extends State<Post> {
                                 Padding(
                                   padding: const EdgeInsets.only(bottom: 18.0),
                                   child: Text(
-                                    "The Sun and the flower",
+                                    widget.title,
                                     style: TextStyle(
                                         fontSize: 20.0,
                                         fontWeight: FontWeight.bold),
@@ -125,7 +135,9 @@ class _PostState extends State<Post> {
                                                 color: Colors.red,
                                               ),
                                               onPressed: null),
-                                          Text(377.toString())
+                                          Text(
+                                            widget.likes.toString(),
+                                          ),
                                         ],
                                       ),
                                       Row(
@@ -136,7 +148,7 @@ class _PostState extends State<Post> {
                                                 color: Colors.grey[400],
                                               ),
                                               onPressed: null),
-                                          Text(13.toString())
+                                          Text(widget.comments.toString())
                                         ],
                                       ),
                                     ],
@@ -169,7 +181,10 @@ class _PostState extends State<Post> {
                   children: [
                     Row(
                       children: [
-                        CircleAvatar(),
+                        CircleAvatar(
+                          backgroundImage:
+                              CachedNetworkImageProvider(widget.userImageUrl),
+                        ),
                         const SizedBox(width: 8.0),
                         Expanded(
                           child: TextField(

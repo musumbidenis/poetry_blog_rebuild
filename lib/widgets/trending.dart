@@ -31,6 +31,7 @@ class Trending extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 itemCount: posts.length,
                 itemBuilder: (BuildContext context, int index) {
+                  final Post post = posts[index];
                   return Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 5.0,

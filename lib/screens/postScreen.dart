@@ -53,10 +53,10 @@ class _PostScreenState extends State<PostScreen> {
               child: Stack(
             children: <Widget>[
               Container(
-                height: MediaQuery.of(context).size.height * .30,
+                height: MediaQuery.of(context).size.height * .32,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: NetworkImage(widget.postImageUrl),
+                      image: CachedNetworkImageProvider(widget.postImageUrl),
                       fit: BoxFit.cover),
                 ),
               ),

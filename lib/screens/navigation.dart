@@ -10,7 +10,7 @@ class _NavigationState extends State<Navigation> {
   int _selectedIndex = 0;
   List<Widget> _screens = [
     Home(),
-    PostScreen(),
+    CreatePost(),
     Profile(),
   ];
 

@@ -1,4 +1,32 @@
+import 'dart:convert';
+import 'package:poetry_blog_rebuild/data/api.dart';
 import 'package:poetry_blog_rebuild/models/models.dart';
+
+/*Create a list array to store the fetched data*/
+List<Post> posts = [];
+
+/*Fetch the posts */
+Future<List<Post>> getPosts() async {
+  var response = await CallAPi().getData('posts');
+  var jsonData = json.decode(response.body);
+  print(jsonData);
+
+  /*Loop through the jsonData and add the items to the list array created*/
+  for (var p in jsonData) {
+    Post post = Post(
+      p["postId"],
+      p["title"],
+      p["description"],
+      p["imageUrl"],
+      p["username"],
+      p["created_at"],
+    );
+
+    posts.add(post);
+  }
+
+  return posts;
+}
 
 final User currentUser = User(
   name: 'Marcus Ng',
@@ -107,44 +135,44 @@ final List<User> onlineUsers = [
   ),
 ];
 
-final List<Post> posts = [
-  Post(
-    user: currentUser,
-    caption: 'Check out these cool puppers',
-    timeAgo: '58m',
-    imageUrl: 'https://images.unsplash.com/photo-1525253086316-d0c936c814f8',
-    likes: 1202,
-    comments: 184,
-    shares: 96,
-  ),
-  Post(
-    user: onlineUsers[4],
-    caption: 'This is a very good boi.',
-    timeAgo: '8hr',
-    imageUrl:
-        'https://images.unsplash.com/photo-1575535468632-345892291673?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-    likes: 894,
-    comments: 201,
-    shares: 27,
-  ),
-  Post(
-    user: onlineUsers[3],
-    caption: 'Adventure 🏔',
-    timeAgo: '15hr',
-    imageUrl:
-        'https://images.unsplash.com/photo-1573331519317-30b24326bb9a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
-    likes: 722,
-    comments: 183,
-    shares: 42,
-  ),
-  Post(
-    user: onlineUsers[9],
-    caption: 'A classic.',
-    timeAgo: '1d',
-    imageUrl:
-        'https://images.unsplash.com/reserve/OlxPGKgRUaX0E1hg3b3X_Dumbo.JPG?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-    likes: 1523,
-    shares: 129,
-    comments: 301,
-  )
-];
+// final List<Post> posts = [
+//   Post(
+//     user: currentUser,
+//     caption: 'Check out these cool puppers',
+//     timeAgo: '58m',
+//     imageUrl: 'https://images.unsplash.com/photo-1525253086316-d0c936c814f8',
+//     likes: 1202,
+//     comments: 184,
+//     shares: 96,
+//   ),
+//   Post(
+//     user: onlineUsers[4],
+//     caption: 'This is a very good boi.',
+//     timeAgo: '8hr',
+//     imageUrl:
+//         'https://images.unsplash.com/photo-1575535468632-345892291673?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
+//     likes: 894,
+//     comments: 201,
+//     shares: 27,
+//   ),
+//   Post(
+//     user: onlineUsers[3],
+//     caption: 'Adventure 🏔',
+//     timeAgo: '15hr',
+//     imageUrl:
+//         'https://images.unsplash.com/photo-1573331519317-30b24326bb9a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
+//     likes: 722,
+//     comments: 183,
+//     shares: 42,
+//   ),
+//   Post(
+//     user: onlineUsers[9],
+//     caption: 'A classic.',
+//     timeAgo: '1d',
+//     imageUrl:
+//         'https://images.unsplash.com/reserve/OlxPGKgRUaX0E1hg3b3X_Dumbo.JPG?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
+//     likes: 1523,
+//     shares: 129,
+//     comments: 301,
+//   )
+// ];

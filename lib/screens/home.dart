@@ -16,6 +16,12 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   @override
+  void initState() {
+    super.initState();
+    getPosts();
+  }
+
+  @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(statusBarColor: Colors.white));
@@ -85,11 +91,9 @@ class _HomeState extends State<Home> {
                       MaterialPageRoute(
                         builder: (context) => PostScreen(
                           postImageUrl: post.imageUrl,
-                          userImageUrl: post.user.imageUrl,
-                          title: post.caption,
-                          author: post.user.name,
-                          likes: post.likes,
-                          comments: post.comments,
+                          userImageUrl: post.imageUrl,
+                          title: post.title,
+                          author: post.username,
                         ),
                       ));
                 },

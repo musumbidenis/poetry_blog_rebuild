@@ -44,13 +44,12 @@ class _CreatePostState extends State<CreatePost> {
               child: Icon(
                 Icons.arrow_back,
                 color: Colors.black54,
-                size: 30.0,
               )),
           title: Text(
             'Create Post',
             style: const TextStyle(
               color: Colors.black54,
-              fontSize: 25.0,
+              fontSize: 20.0,
               fontWeight: FontWeight.bold,
             ),
           ),

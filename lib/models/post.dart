@@ -1,21 +1,13 @@
-import 'package:poetry_blog_rebuild/models/models.dart';
+import 'package:poetry_blog_rebuild/models/user.dart';
 
 class Post {
-  final User user;
-  final String caption;
-  final String timeAgo;
+  final String postId;
+  final String title;
+  final String username;
+  final String description;
   final String imageUrl;
-  final int likes;
-  final int comments;
-  final int shares;
+  final String created_at;
 
-  const Post({
-    this.user,
-    this.caption,
-    this.timeAgo,
-    this.imageUrl,
-    this.likes,
-    this.comments,
-    this.shares,
-  });
+  Post(this.postId, this.title, this.description, this.imageUrl,
+      this.created_at, this.username);
 }

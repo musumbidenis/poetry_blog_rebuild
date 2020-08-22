@@ -50,7 +50,7 @@ class PostContainer extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18.0),
               child: Text(
-                post.caption,
+                post.title,
                 style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
               ),
             ),
@@ -68,7 +68,7 @@ class PostContainer extends StatelessWidget {
                               color: Colors.red,
                             ),
                             onPressed: null),
-                        Text(post.likes.toString())
+                        Text("10")
                       ],
                     ),
                     Row(
@@ -80,7 +80,7 @@ class PostContainer extends StatelessWidget {
                               color: Colors.grey[400],
                             ),
                             onPressed: null),
-                        Text(post.comments.toString())
+                        Text("10")
                       ],
                     ),
                   ],

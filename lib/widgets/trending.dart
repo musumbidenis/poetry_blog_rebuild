@@ -86,7 +86,7 @@ class _PostCard extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 10.0,
-                backgroundImage: CachedNetworkImageProvider(post.user.imageUrl),
+                backgroundImage: CachedNetworkImageProvider(post.imageUrl),
               ),
               SizedBox(
                 width: 3.0,
@@ -95,7 +95,7 @@ class _PostCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    post.user.name,
+                    post.username,
                     style: const TextStyle(
                       fontSize: 12.0,
                       color: Colors.white,
@@ -105,7 +105,7 @@ class _PostCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    post.timeAgo,
+                    "1",
                     style: const TextStyle(
                       fontSize: 10.0,
                       color: Colors.white,

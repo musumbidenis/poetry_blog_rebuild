@@ -19,14 +19,14 @@ class Profile extends StatelessWidget {
                 size: 30.0,
               )),
           title: Text(
-            'Go Back',
+            'Profile',
             style: const TextStyle(
               color: Colors.black54,
-              fontSize: 20.0,
+              fontSize: 25.0,
               fontWeight: FontWeight.bold,
             ),
           ),
-          centerTitle: false,
+          centerTitle: true,
           floating: true,
           elevation: 0,
           actions: [
@@ -39,15 +39,6 @@ class Profile extends StatelessWidget {
             //   ),
             // ),
           ],
-        ),
-        SliverToBoxAdapter(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 35.0, top: 30.0, bottom: 10.0),
-            child: Text(
-              "Profile",
-              style: TextStyle(fontSize: 25.0),
-            ),
-          ),
         ),
         SliverToBoxAdapter(
             child: Column(

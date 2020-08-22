@@ -25,7 +25,7 @@ class _HomeState extends State<Home> {
           brightness: Brightness.light,
           backgroundColor: Colors.white,
           leading: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(12.0),
             child: CircleAvatar(
               backgroundColor: Colors.grey[200],
               backgroundImage: CachedNetworkImageProvider(currentUser.imageUrl),
@@ -35,7 +35,7 @@ class _HomeState extends State<Home> {
             'Home',
             style: const TextStyle(
               color: Colors.pinkAccent,
-              fontSize: 28.0,
+              fontSize: 20.0,
               fontWeight: FontWeight.bold,
               letterSpacing: -1.2,
             ),
@@ -44,21 +44,24 @@ class _HomeState extends State<Home> {
           floating: true,
           elevation: 0,
           actions: [
-            Container(
-              width: 70.0,
-              decoration: BoxDecoration(
-                color: Colors.grey[100],
-                shape: BoxShape.rectangle,
-                borderRadius: new BorderRadius.only(
-                  topLeft: const Radius.circular(30.0),
-                  bottomLeft: const Radius.circular(30.0),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Container(
+                width: 50.0,
+                decoration: BoxDecoration(
+                  color: Colors.grey[100],
+                  shape: BoxShape.rectangle,
+                  borderRadius: new BorderRadius.only(
+                    topLeft: const Radius.circular(30.0),
+                    bottomLeft: const Radius.circular(30.0),
+                  ),
                 ),
-              ),
-              child: IconButton(
-                icon: Icon(Icons.search),
-                iconSize: 35.0,
-                color: Colors.pinkAccent,
-                onPressed: () {},
+                child: IconButton(
+                  icon: Icon(Icons.search),
+                  iconSize: 25.0,
+                  color: Colors.pinkAccent,
+                  onPressed: () {},
+                ),
               ),
             ),
           ],

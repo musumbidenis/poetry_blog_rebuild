@@ -29,16 +29,6 @@ class Profile extends StatelessWidget {
           centerTitle: true,
           floating: true,
           elevation: 0,
-          actions: [
-            // Padding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: CircleAvatar(
-            //     backgroundColor: Colors.grey[200],
-            //     backgroundImage:
-            //         CachedNetworkImageProvider(currentUser.imageUrl),
-            //   ),
-            // ),
-          ],
         ),
         SliverToBoxAdapter(
             child: Column(

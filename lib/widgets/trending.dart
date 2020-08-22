@@ -22,7 +22,7 @@ class Trending extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 18.0),
           child: Container(
-            height: 250.0,
+            height: 200.0,
             child: ListView.builder(
                 padding: const EdgeInsets.symmetric(
                   vertical: 10.0,
@@ -31,7 +31,6 @@ class Trending extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 itemCount: posts.length,
                 itemBuilder: (BuildContext context, int index) {
-                  final Post post = posts[index];
                   return Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 5.0,
@@ -61,13 +60,13 @@ class _PostCard extends StatelessWidget {
           child: CachedNetworkImage(
             imageUrl: post.imageUrl,
             height: double.infinity,
-            width: 150.0,
+            width: 120.0,
             fit: BoxFit.cover,
           ),
         ),
         Container(
           height: double.infinity,
-          width: 150.0,
+          width: 120.0,
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topCenter,
@@ -84,11 +83,11 @@ class _PostCard extends StatelessWidget {
           child: Row(
             children: [
               CircleAvatar(
-                radius: 15.0,
+                radius: 10.0,
                 backgroundImage: CachedNetworkImageProvider(post.user.imageUrl),
               ),
               SizedBox(
-                width: 5.0,
+                width: 3.0,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,6 +95,7 @@ class _PostCard extends StatelessWidget {
                   Text(
                     post.user.name,
                     style: const TextStyle(
+                      fontSize: 12.0,
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
@@ -105,6 +105,7 @@ class _PostCard extends StatelessWidget {
                   Text(
                     post.timeAgo,
                     style: const TextStyle(
+                      fontSize: 10.0,
                       color: Colors.white,
                     ),
                   ),

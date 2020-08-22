@@ -27,28 +27,6 @@ class _PostScreenState extends State<PostScreen> {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          // SliverAppBar(
-          //   brightness: Brightness.light,
-          //   backgroundColor: Colors.white,
-          //   leading: Padding(
-          //       padding: const EdgeInsets.all(8.0),
-          //       child: Icon(
-          //         Icons.arrow_back,
-          //         color: Colors.black54,
-          //         size: 30.0,
-          //       )),
-          //   title: Text(
-          //     'Go Back',
-          //     style: const TextStyle(
-          //       color: Colors.black54,
-          //       fontSize: 20.0,
-          //       fontWeight: FontWeight.bold,
-          //     ),
-          //   ),
-          //   centerTitle: false,
-          //   floating: true,
-          //   elevation: 0,
-          // ),
           SliverToBoxAdapter(
               child: Stack(
             children: <Widget>[

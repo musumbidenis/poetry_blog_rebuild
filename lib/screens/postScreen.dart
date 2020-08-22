@@ -31,7 +31,7 @@ class _PostScreenState extends State<PostScreen> {
               child: Stack(
             children: <Widget>[
               Container(
-                height: MediaQuery.of(context).size.height * .32,
+                height: MediaQuery.of(context).size.height * .30,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                       image: CachedNetworkImageProvider(widget.postImageUrl),
@@ -70,14 +70,14 @@ class _PostScreenState extends State<PostScreen> {
                               child: Column(
                                 children: [
                                   CircleAvatar(
-                                    radius: 35.0,
+                                    radius: 20.0,
                                     backgroundImage: CachedNetworkImageProvider(
                                         widget.userImageUrl),
                                   ),
                                   Text(
                                     widget.author,
                                     style: TextStyle(
-                                      fontSize: 15.0,
+                                      fontSize: 12.0,
                                     ),
                                   ),
                                 ],
@@ -92,14 +92,13 @@ class _PostScreenState extends State<PostScreen> {
                                   child: Text(
                                     widget.title,
                                     style: TextStyle(
-                                        fontSize: 20.0,
+                                        fontSize: 18.0,
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ),
                                 Text(
                                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla feugiat enim orci, id rhoncus enim lacinia at. Duis eu turpis nibh. Nulla suscipit magna ultricies risus ultrices lobortis. Nunc pharetra nisi urna, cursus molestie enim pulvinar sed. In libero orci, porttitor vel risus sit amet, fermentum elementum leo. Nunc quis purus eget enim auctor mattis vitae ut arcu. Ut auctor sapien id nunc interdum, ac bibendum mauris consectetur. Vestibulum at tempor diam, sit amet consectetur libero. Vivamus ipsum sapien, gravida in augue sed, pulvinar finibus nunc. Suspendisse vulputate dapibus risus, sit amet pulvinar leo dapibus eget. Morbi eu blandit urna.  amet, consectetur adipiscing elit. Nulla feugiat enim orci, id rhoncus enim lacinia at. ",
-                                    style: TextStyle(
-                                        fontSize: 16.0, letterSpacing: 0.5),
+                                    style: TextStyle(fontSize: 14.0),
                                     textAlign: TextAlign.justify),
                                 Padding(
                                   padding: const EdgeInsets.only(top: 18.0),
@@ -110,6 +109,7 @@ class _PostScreenState extends State<PostScreen> {
                                           IconButton(
                                               icon: Icon(
                                                 Icons.favorite,
+                                                size: 20.0,
                                                 color: Colors.red,
                                               ),
                                               onPressed: null),
@@ -123,6 +123,7 @@ class _PostScreenState extends State<PostScreen> {
                                           IconButton(
                                               icon: Icon(
                                                 Icons.mode_comment,
+                                                size: 20.0,
                                                 color: Colors.grey[400],
                                               ),
                                               onPressed: null),
@@ -160,6 +161,7 @@ class _PostScreenState extends State<PostScreen> {
                     Row(
                       children: [
                         CircleAvatar(
+                          radius: 15.0,
                           backgroundImage:
                               CachedNetworkImageProvider(widget.userImageUrl),
                         ),

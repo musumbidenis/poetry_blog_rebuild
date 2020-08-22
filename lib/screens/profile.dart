@@ -16,13 +16,12 @@ class Profile extends StatelessWidget {
               child: Icon(
                 Icons.arrow_back,
                 color: Colors.black54,
-                size: 30.0,
               )),
           title: Text(
             'Profile',
             style: const TextStyle(
               color: Colors.black54,
-              fontSize: 25.0,
+              fontSize: 20.0,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -40,8 +39,8 @@ class Profile extends StatelessWidget {
                   padding: const EdgeInsets.only(
                       left: 35.0, top: 10.0, bottom: 10.0),
                   child: Container(
-                    height: 200.0,
-                    width: 200.0,
+                    height: 150.0,
+                    width: 150.0,
                     decoration: new BoxDecoration(
                         color: Colors.red,
                         borderRadius: new BorderRadius.only(
@@ -62,11 +61,11 @@ class Profile extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 20.0),
+                        padding: const EdgeInsets.symmetric(vertical: 10.0),
                         child: Column(
                           children: [
                             Text(
@@ -84,7 +83,7 @@ class Profile extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 20.0),
+                        padding: const EdgeInsets.symmetric(vertical: 10.0),
                         child: Column(
                           children: [
                             Text(
@@ -115,12 +114,11 @@ class Profile extends StatelessWidget {
                   Text(
                     currentUser.name,
                     style:
-                        TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold),
+                        TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                   ),
                   Text(
                     'marcusng@gmail.com',
-                    style:
-                        TextStyle(fontSize: 10.0, fontStyle: FontStyle.italic),
+                    style: TextStyle(fontSize: 12.0),
                   ),
                 ],
               ),
@@ -131,66 +129,14 @@ class Profile extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding:
-                    const EdgeInsets.only(left: 35.0, top: 30.0, bottom: 10.0),
-                child: Text(
-                  "Posts",
-                  style: TextStyle(fontSize: 25.0),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 20.0, bottom: 5.0),
-                child: Container(
-                  height: 250.0,
-                  child: ListView.builder(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 10.0,
-                        horizontal: 8.0,
-                      ),
-                      scrollDirection: Axis.horizontal,
-                      itemCount: posts.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        if (posts[index].user == currentUser) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 5.0,
-                            ),
-                            child: Stack(
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(12.0),
-                                  child: CachedNetworkImage(
-                                    imageUrl: posts[index].imageUrl,
-                                    height: 150.0,
-                                    width: 150.0,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                Container(
-                                  height: 180.0,
-                                  width: 150.0,
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      begin: Alignment.topCenter,
-                                      end: Alignment.bottomCenter,
-                                      colors: [
-                                        Colors.transparent,
-                                        Colors.black54,
-                                      ],
-                                    ),
-                                    borderRadius: BorderRadius.circular(12.0),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        } else {
-                          return null;
-                        }
-                      }),
-                ),
-              ),
+              // Padding(
+              //   padding:
+              //       const EdgeInsets.only(left: 35.0, top: 30.0, bottom: 10.0),
+              //   child: Text(
+              //     "Posts",
+              //     style: TextStyle(fontSize: 20.0),
+              //   ),
+              // ),
             ],
           ),
         ),

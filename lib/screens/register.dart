@@ -1,4 +1,9 @@
+import 'dart:convert';
+
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:poetry_blog_rebuild/data/api.dart';
+import 'package:poetry_blog_rebuild/screens/screens.dart';
 import 'package:poetry_blog_rebuild/widgets/widgets.dart';
 
 class Register extends StatefulWidget {
@@ -24,19 +29,24 @@ class _RegisterState extends State<Register> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           color: Colors.grey[900],
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
         elevation: 0.0,
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Text(
-              "Create Account",
-              style: TextStyle(
-                  fontSize: 25.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.pink),
+            Padding(
+              padding: const EdgeInsets.only(top: 20.0),
+              child: Text(
+                "Create Account",
+                style: TextStyle(
+                    fontSize: 30.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.pink),
+              ),
             ),
             Text(
               "Create a new account",
@@ -44,24 +54,88 @@ class _RegisterState extends State<Register> {
             ),
             Padding(
               padding:
-                  const EdgeInsets.symmetric(vertical: 40.0, horizontal: 45.0),
+                  const EdgeInsets.symmetric(vertical: 30.0, horizontal: 45.0),
               child: Form(
+                key: _formKey,
                 child: Column(
                   children: [
-                    Input(
-                      labelText: "USERNAME",
+                    TextFormField(
+                      controller: username,
+                      decoration: InputDecoration(
+                        labelText: "USERNAME",
+                        labelStyle: TextStyle(
+                          fontFamily: 'Source Sans Pro',
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey[400],
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.pinkAccent)),
+                      ),
+                      validator: (String value) {
+                        if (value.isEmpty) {
+                          return "USERNAME field cannot be blank";
+                        }
+                      },
                     ),
                     SizedBox(height: 8.0),
-                    Input(
-                      labelText: "EMAIL",
+                    TextFormField(
+                      controller: email,
+                      decoration: InputDecoration(
+                        labelText: "EMAIL",
+                        labelStyle: TextStyle(
+                          fontFamily: 'Source Sans Pro',
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey[400],
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.pinkAccent)),
+                      ),
+                      keyboardType: TextInputType.emailAddress,
+                      validator: (String value) {
+                        if (value.isEmpty) {
+                          return "EMAIL field cannot be blank";
+                        }
+                      },
                     ),
                     SizedBox(height: 8.0),
-                    Input(
-                      labelText: "PHONE",
+                    TextFormField(
+                      controller: phone,
+                      decoration: InputDecoration(
+                        labelText: "PHONE",
+                        labelStyle: TextStyle(
+                          fontFamily: 'Source Sans Pro',
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey[400],
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.pinkAccent)),
+                      ),
+                      keyboardType: TextInputType.phone,
+                      validator: (String value) {
+                        if (value.isEmpty) {
+                          return "PHONE field cannot be blank";
+                        }
+                      },
                     ),
                     SizedBox(height: 8.0),
-                    Input(
-                      labelText: "PASSWORD",
+                    TextFormField(
+                      controller: password,
+                      decoration: InputDecoration(
+                        labelText: "PASSWORD",
+                        labelStyle: TextStyle(
+                          fontFamily: 'Source Sans Pro',
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey[400],
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.pinkAccent)),
+                      ),
+                      obscureText: true,
+                      validator: (String value) {
+                        if (value.isEmpty) {
+                          return "PASSWORD field cannot be blank";
+                        }
+                      },
                     ),
                     SizedBox(height: 75.0),
                     Container(
@@ -84,7 +158,7 @@ class _RegisterState extends State<Register> {
                             ),
                           ),
                         ),
-                        onTap: () {},
+                        onTap: _handleRegister,
                       ),
                     ),
                   ],
@@ -101,7 +175,10 @@ class _RegisterState extends State<Register> {
                     style: TextStyle(
                         color: Colors.pink, fontWeight: FontWeight.bold),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Login()));
+                  },
                 ),
               ],
             )
@@ -109,5 +186,67 @@ class _RegisterState extends State<Register> {
         ),
       ),
     );
+  }
+
+  Future<void> _handleRegister() async {
+    var form = _formKey.currentState;
+    if (form.validate()) {
+      form.save();
+
+      /*User data to be pushed to db */
+      var data = {
+        "username": username.text,
+        "email": email.text,
+        "phone": phone.text,
+        "password": password.text,
+      };
+
+      /*Set the registration button to loading state */
+      setState(() {
+        _isLoading = true;
+      });
+
+      /*Handles posting data to db */
+      var response = await CallAPi().postData(data, 'register');
+      var body = json.decode(response.body);
+
+      if (body == 'success') {
+        /*Navigate to login page */
+        Navigator.pop(context);
+
+        /**Set loading state of button to false &&
+         * Clear the text fields
+        */
+        username.clear();
+        password.clear();
+        email.clear();
+        phone.clear();
+        setState(() {
+          _isLoading = false;
+        });
+
+        /**Display success message */
+        Flushbar(
+          message: "Registration was successfull!",
+          duration: Duration(seconds: 10),
+          backgroundColor: Colors.green,
+        )..show(context);
+      } else if (body == 'userExists') {
+        /**Display error message */
+        Flushbar(
+          message: "Username already taken! Please choose a unique username.",
+          duration: Duration(seconds: 10),
+          backgroundColor: Colors.red,
+        )..show(context);
+
+        /**Set loading state of button to false &&
+         * Clear the username text field
+        */
+        username.clear();
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
   }
 }

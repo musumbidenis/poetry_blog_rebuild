@@ -1,5 +1,12 @@
+import 'dart:convert';
+
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:poetry_blog_rebuild/data/api.dart';
+import 'package:poetry_blog_rebuild/screens/screens.dart';
 import 'package:poetry_blog_rebuild/widgets/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -13,57 +20,84 @@ class _LoginState extends State<Login> {
 
   /*Text Controllers */
   TextEditingController username = TextEditingController();
-  TextEditingController email = TextEditingController();
-  TextEditingController phone = TextEditingController();
   TextEditingController password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          color: Colors.grey[900],
-          onPressed: () {},
-        ),
         elevation: 0.0,
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Text(
-              "Create Account",
-              style: TextStyle(
-                  fontSize: 25.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.pink),
+            Padding(
+              padding: const EdgeInsets.only(top: 50.0),
+              child: Text(
+                "Welcome Back",
+                style: TextStyle(
+                    fontSize: 30.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.pink),
+              ),
             ),
             Text(
-              "Create a new account",
+              "Sign in to continue",
               style: TextStyle(color: Colors.grey[700]),
             ),
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 40.0, horizontal: 45.0),
+              padding: const EdgeInsets.only(
+                  left: 45.0, right: 45.0, top: 50.0, bottom: 30.0),
               child: Form(
+                key: _formKey,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Input(
-                      labelText: "USERNAME",
+                    TextFormField(
+                      controller: username,
+                      decoration: InputDecoration(
+                        labelText: "USERNAME",
+                        labelStyle: TextStyle(
+                          fontFamily: 'Source Sans Pro',
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey[400],
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.pinkAccent)),
+                      ),
+                      validator: (String value) {
+                        if (value.isEmpty) {
+                          return "USERNAME field cannot be blank";
+                        }
+                      },
                     ),
                     SizedBox(height: 8.0),
-                    Input(
-                      labelText: "EMAIL",
+                    TextFormField(
+                      controller: password,
+                      decoration: InputDecoration(
+                        labelText: "PASSWORD",
+                        labelStyle: TextStyle(
+                          fontFamily: 'Source Sans Pro',
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey[400],
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.pinkAccent)),
+                      ),
+                      obscureText: true,
+                      validator: (String value) {
+                        if (value.isEmpty) {
+                          return "PASSWORD field cannot be blank";
+                        }
+                      },
                     ),
-                    SizedBox(height: 8.0),
-                    Input(
-                      labelText: "PHONE",
+                    SizedBox(height: 30.0),
+                    Text(
+                      "Forgot password?",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.pink),
                     ),
-                    SizedBox(height: 8.0),
-                    Input(
-                      labelText: "PASSWORD",
-                    ),
-                    SizedBox(height: 75.0),
+                    SizedBox(height: 30.0),
                     Container(
                       height: 50.0,
                       child: GestureDetector(
@@ -75,7 +109,7 @@ class _LoginState extends State<Login> {
                           child: GestureDetector(
                             child: Center(
                               child: Text(
-                                _isLoading ? 'REGISTERING..' : 'REGISTER',
+                                _isLoading ? 'LOGING..' : 'LOGIN',
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
@@ -84,7 +118,7 @@ class _LoginState extends State<Login> {
                             ),
                           ),
                         ),
-                        onTap: () {},
+                        onTap: _handleLogin,
                       ),
                     ),
                   ],
@@ -94,14 +128,17 @@ class _LoginState extends State<Login> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Already have an account? "),
+                Text("Don\'t have an account? "),
                 InkWell(
                   child: Text(
-                    "Login",
+                    "Register",
                     style: TextStyle(
                         color: Colors.pink, fontWeight: FontWeight.bold),
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Register()));
+                  },
                 ),
               ],
             )
@@ -109,5 +146,63 @@ class _LoginState extends State<Login> {
         ),
       ),
     );
+  }
+
+  Future<void> _handleLogin() async {
+    var form = _formKey.currentState;
+    if (form.validate()) {
+      form.save();
+
+      /*User data to be pushed to db */
+      var data = {
+        "username": username.text,
+        "password": password.text,
+      };
+
+      /*Set the login button to loading state */
+      setState(() {
+        _isLoading = true;
+      });
+
+      /*Handles posting data to db */
+      var response = await CallAPi().postData(data, 'login');
+      var body = json.decode(response.body);
+
+      if (body == 'success') {
+        /*Navigate to the Home page */
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Navigation()));
+
+        /*Save the username of logged in user to localstorage */
+        SharedPreferences localStorage = await SharedPreferences.getInstance();
+        localStorage.setString('userKey', username.text);
+
+        /**Set loading state of button to false &&
+         * Clear the text fields
+         */
+        username.clear();
+        password.clear();
+        setState(() {
+          _isLoading = false;
+        });
+      } else {
+        username.clear();
+        password.clear();
+        setState(() {
+          _isLoading = false;
+        });
+        /**Display error message */
+        Flushbar(
+          message: "Incorrect details! Please try again.",
+          duration: Duration(seconds: 3),
+          backgroundColor: Colors.red,
+        )..show(context);
+
+        /**Set loading state of button to false &&
+         * Clear the text fields
+         */
+
+      }
+    }
   }
 }

@@ -80,6 +80,18 @@ class _HomeState extends State<Home> {
                             scrollDirection: Axis.horizontal,
                             itemCount: snapshot.data.length,
                             itemBuilder: (BuildContext context, int index) {
+                              // var initial = snapshot.data[index].username;
+                              /*Get the timestamp */
+                              var date = DateTime.parse(
+                                  snapshot.data[index].created_at);
+                              /*Find the difference in time from now in seconds */
+                              var difference =
+                                  DateTime.now().difference(date).inSeconds;
+
+                              /*Format it into time ago */
+                              var timeAgo = DateTime.now()
+                                  .subtract(Duration(seconds: difference));
+                              var timestamp = (timeago.format(timeAgo));
                               return Padding(
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 5.0,
@@ -103,6 +115,7 @@ class _HomeState extends State<Home> {
                                   },
                                   child: Trending(
                                     post: snapshot.data[index],
+                                    timestamp: timestamp,
                                   ),
                                 ),
                               );
@@ -132,19 +145,6 @@ class _HomeState extends State<Home> {
                         physics: NeverScrollableScrollPhysics(),
                         itemCount: snapshot.data.length,
                         itemBuilder: (BuildContext context, int index) {
-                          // var initial = snapshot.data[index].username;
-                          /*Get the timestamp */
-                          var date =
-                              DateTime.parse(snapshot.data[index].created_at);
-                          /*Find the difference in time from now in seconds */
-                          var difference =
-                              DateTime.now().difference(date).inSeconds;
-
-                          /*Format it into time ago */
-                          var timeAgo = DateTime.now()
-                              .subtract(Duration(seconds: difference));
-                          var timestamp = (timeago.format(timeAgo));
-
                           return InkWell(
                               onTap: () {
                                 Navigator.push(

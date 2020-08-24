@@ -4,8 +4,9 @@ import 'package:poetry_blog_rebuild/models/models.dart';
 
 class Trending extends StatelessWidget {
   final Post post;
+  final timestamp;
 
-  const Trending({Key key, this.post}) : super(key: key);
+  const Trending({Key key, this.post, this.timestamp}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -58,7 +59,7 @@ class Trending extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    "1",
+                    timestamp,
                     style: const TextStyle(
                       fontSize: 10.0,
                       color: Colors.white,

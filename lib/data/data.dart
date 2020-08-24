@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:poetry_blog_rebuild/data/api.dart';
 import 'package:poetry_blog_rebuild/models/models.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /*Create a list array to store the fetched data*/
 List<Post> posts = [];
@@ -26,6 +27,12 @@ Future<List<Post>> getPosts() async {
   }
 
   return posts;
+}
+
+void getCurrentUser() async {
+/*Retrieve the username of user from localStorage */
+  SharedPreferences localStorage = await SharedPreferences.getInstance();
+  var username = localStorage.getString('userKey');
 }
 
 final User currentUser = User(

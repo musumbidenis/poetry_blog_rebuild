@@ -3,56 +3,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:poetry_blog_rebuild/models/models.dart';
 
 class Trending extends StatelessWidget {
-  final List<Post> posts;
-
-  const Trending({Key key, @required this.posts}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 28.0, top: 20.0, bottom: 5.0),
-          child: Text(
-            "Trending",
-            style: TextStyle(
-              fontSize: 20.0,
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 18.0),
-          child: Container(
-            height: 200.0,
-            child: ListView.builder(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 10.0,
-                  horizontal: 8.0,
-                ),
-                scrollDirection: Axis.horizontal,
-                itemCount: posts.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 5.0,
-                    ),
-                    child: _PostCard(
-                      post: posts[index],
-                    ),
-                  );
-                }),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _PostCard extends StatelessWidget {
   final Post post;
 
-  const _PostCard({Key key, this.post}) : super(key: key);
+  const Trending({Key key, this.post}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Stack(

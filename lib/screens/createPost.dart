@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:poetry_blog_rebuild/data/api.dart';
 import 'package:random_string/random_string.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -164,7 +165,7 @@ class _CreatePostState extends State<CreatePost> {
                           fontFamily: 'Source Sans Pro',
                           fontWeight: FontWeight.bold),
                     ),
-                    onPressed: () {},
+                    onPressed: _createPost,
                   ),
                 ),
               ],
@@ -173,5 +174,59 @@ class _CreatePostState extends State<CreatePost> {
         ),
       ],
     ));
+  }
+
+  /*Create new post*/
+  Future _createPost() async {
+    var form = _formKey.currentState;
+    if (form.validate() && selectedImage != null) {
+      form.save();
+
+      /*Retrieve the username of user from localStorage */
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+      var username = localStorage.getString('userKey');
+
+      var data = {
+        'title': title.text,
+        'description': description.text,
+        'username': username,
+        'image': base64Encode(selectedImage.readAsBytesSync()),
+        'imageName': randomAlphaNumeric(9),
+      };
+
+      /*Set the login button to loading state */
+      setState(() {
+        isLoading = true;
+      });
+
+      var response = await CallAPi().postData(data, 'post');
+      var body = json.decode(response.body);
+
+      if (body == 'success') {
+        /*Navigate to the Home page */
+        Navigator.pop(context);
+
+        /**Set loading state of button to false &&
+         * Clear the text fileds
+        */
+        title.clear();
+        description.clear();
+        setState(() {
+          isLoading = false;
+        });
+      } else {
+        /*Set loading state of button to false */
+        setState(() {
+          isLoading = false;
+        });
+      }
+    } else if (selectedImage == null) {
+      /**Display error message */
+      Flushbar(
+        message: "Please select a cover Image for your piece!",
+        duration: Duration(seconds: 3),
+        backgroundColor: Colors.red,
+      )..show(context);
+    }
   }
 }

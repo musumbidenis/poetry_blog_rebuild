@@ -18,8 +18,8 @@ Future<List<Post>> getPosts() async {
       p["title"],
       p["description"],
       p["imageUrl"],
-      p["username"],
       p["created_at"],
+      p["username"],
     );
 
     posts.add(post);

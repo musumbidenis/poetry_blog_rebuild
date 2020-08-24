@@ -1,15 +1,8 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:timeago/timeago.dart' as timeago;
 import 'package:poetry_blog_rebuild/data/data.dart';
-import 'package:poetry_blog_rebuild/models/models.dart';
-import 'package:poetry_blog_rebuild/screens/screens.dart';
-import 'package:poetry_blog_rebuild/widgets/widgets.dart';
 
 class Home extends StatefulWidget {
-  final User currentUser;
-
-  const Home({Key key, this.currentUser}) : super(key: key);
   @override
   _HomeState createState() => _HomeState();
 }
@@ -18,90 +11,251 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    getPosts();
   }
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(statusBarColor: Colors.white));
     return Scaffold(
-      body: CustomScrollView(slivers: [
-        SliverAppBar(
-          brightness: Brightness.light,
-          backgroundColor: Colors.white,
-          leading: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: CircleAvatar(
-              backgroundColor: Colors.grey[200],
-              backgroundImage: CachedNetworkImageProvider(currentUser.imageUrl),
-            ),
+      appBar: AppBar(
+        elevation: 0,
+        title: Text(
+          'Poetry',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 27,
+            fontFamily: 'Pacifico',
           ),
-          title: Text(
-            'Home',
-            style: const TextStyle(
-              color: Colors.pinkAccent,
-              fontSize: 20.0,
-              fontWeight: FontWeight.bold,
-              letterSpacing: -1.2,
-            ),
-          ),
-          centerTitle: false,
-          floating: true,
-          elevation: 0,
-          actions: [
+        ),
+        centerTitle: true,
+        // actions: <Widget>[
+        //   Padding(
+        //     padding: const EdgeInsets.only(right: 10.0),
+        //     child: InkWell(
+        //       child: Icon(
+        //         Icons.more_vert,
+        //         size: 30.0,
+        //         color: Colors.grey,
+        //       ),
+        //       onTap: () {},
+        //     ),
+        //   ),
+        // ],
+      ),
+      body: RefreshIndicator(
+        onRefresh: getPosts,
+        child: ListView(
+          children: <Widget>[
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Container(
-                width: 50.0,
-                decoration: BoxDecoration(
-                  color: Colors.grey[100],
-                  shape: BoxShape.rectangle,
-                  borderRadius: new BorderRadius.only(
-                    topLeft: const Radius.circular(30.0),
-                    bottomLeft: const Radius.circular(30.0),
-                  ),
-                ),
-                child: IconButton(
-                  icon: Icon(Icons.search),
-                  iconSize: 25.0,
-                  color: Colors.pinkAccent,
-                  onPressed: () {},
+              padding: const EdgeInsets.only(left: 20.0),
+              child: Text(
+                "Trending",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontFamily: 'Source Sans Pro',
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
+            Container(
+              height: MediaQuery.of(context).size.height * .30,
+              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 5.0),
+              child: FutureBuilder(
+                  future: getPosts(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.hasData) {
+                      return ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          var date =
+                              DateTime.parse(snapshot.data[index].created_at);
+                          /*Find the difference in time from now in seconds */
+                          var difference =
+                              DateTime.now().difference(date).inSeconds;
+
+                          /*Format it into time ago */
+                          var timeAgo = DateTime.now()
+                              .subtract(Duration(seconds: difference));
+                          var timestamp = (timeago.format(timeAgo));
+                          return Container(
+                            width: MediaQuery.of(context).size.width * 0.6,
+                            child: Card(
+                              child: GestureDetector(
+                                onTap: () {},
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12.0),
+                                    image: DecorationImage(
+                                      image: NetworkImage(
+                                          snapshot.data[index].imageUrl),
+                                      fit: BoxFit.fill,
+                                      colorFilter: new ColorFilter.mode(
+                                        Colors.black.withOpacity(1.0),
+                                        BlendMode.softLight,
+                                      ),
+                                    ),
+                                  ),
+                                  child: Column(
+                                    children: <Widget>[
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Align(
+                                          alignment: Alignment.topLeft,
+                                          child: Text(
+                                            snapshot.data[index].title,
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18.0,
+                                              fontFamily: 'Source Sans Pro',
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Spacer(),
+                                      Row(
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Align(
+                                                alignment: Alignment.bottomLeft,
+                                                child: Icon(
+                                                  Icons.account_circle,
+                                                  color: Colors.blue,
+                                                  size: 20.0,
+                                                )),
+                                          ),
+                                          Text(
+                                            snapshot.data[index].username,
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12,
+                                              fontFamily: 'Source Sans Pro',
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    } else if (snapshot.hasError) {
+                      return Text("${snapshot.error}");
+                    } /*By default, show a loading spinner */
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          CircularProgressIndicator(),
+                          SizedBox(height: 8.0),
+                          Text("Loading posts..")
+                        ],
+                      ),
+                    );
+                  }),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(9),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20.0),
+                    child: Text(
+                      "All Posts",
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontFamily: 'Source Sans Pro',
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  FutureBuilder(
+                      future: getPosts(),
+                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+                        if (snapshot.hasData) {
+                          return ListView.builder(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: snapshot.data.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                // var initial = snapshot.data[index].username;
+                                /*Get the timestamp */
+                                var date = DateTime.parse(
+                                    snapshot.data[index].created_at);
+                                /*Find the difference in time from now in seconds */
+                                var difference =
+                                    DateTime.now().difference(date).inSeconds;
+
+                                /*Format it into time ago */
+                                var timeAgo = DateTime.now()
+                                    .subtract(Duration(seconds: difference));
+                                var timestamp = (timeago.format(timeAgo));
+
+                                return Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: ListTile(
+                                    leading: Icon(
+                                      Icons.account_circle,
+                                      color: Colors.blue,
+                                      size: 70.0,
+                                    ),
+                                    title: Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 15.0),
+                                      child: Text(
+                                        snapshot.data[index].title,
+                                        style: TextStyle(
+                                          fontFamily: 'Source Sans Pro',
+                                          fontSize: 15.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                    subtitle: Row(
+                                      children: <Widget>[
+                                        Icon(
+                                          Icons.query_builder,
+                                          size: 10,
+                                        ),
+                                        Text(
+                                          "$timestamp",
+                                          style: TextStyle(
+                                            fontFamily: 'Source Sans Pro',
+                                            fontSize: 8.0,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    trailing: Icon(Icons.arrow_forward_ios),
+                                    onTap: () {},
+                                  ),
+                                );
+                              });
+                        } else if (snapshot.hasError) {
+                          return Text("${snapshot.error}");
+                        } /*By default, show a loading spinner */
+                        return Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              CircularProgressIndicator(),
+                              SizedBox(height: 8.0),
+                              Text("Loading posts..")
+                            ],
+                          ),
+                        );
+                      }),
+                ],
+              ),
+            )
           ],
         ),
-        SliverPadding(
-          padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0),
-          sliver: SliverToBoxAdapter(
-            child: Trending(
-              posts: posts,
-            ),
-          ),
-        ),
-        SliverList(
-            delegate: SliverChildBuilderDelegate(
-          (context, index) {
-            final Post post = posts[index];
-            return InkWell(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => PostScreen(
-                          postImageUrl: post.imageUrl,
-                          userImageUrl: post.imageUrl,
-                          title: post.title,
-                          author: post.username,
-                        ),
-                      ));
-                },
-                child: PostContainer(post: post));
-          },
-          childCount: posts.length,
-        )),
-      ]),
+      ),
     );
   }
 }

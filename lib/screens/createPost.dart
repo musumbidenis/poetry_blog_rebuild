@@ -4,6 +4,7 @@ import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:poetry_blog_rebuild/data/api.dart';
+import 'package:poetry_blog_rebuild/screens/screens.dart';
 import 'package:random_string/random_string.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -81,6 +82,7 @@ class _CreatePostState extends State<CreatePost> {
                                 borderRadius: BorderRadius.circular(12),
                                 child: Image.file(
                                   selectedImage,
+                                  fit: BoxFit.cover,
                                 )),
                           )
                         : Container(
@@ -203,8 +205,9 @@ class _CreatePostState extends State<CreatePost> {
       var body = json.decode(response.body);
 
       if (body == 'success') {
-        /*Navigate to the Home page */
-        Navigator.pop(context);
+        /*Navigate to the Home Screen */
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Navigation()));
 
         /**Set loading state of button to false &&
          * Clear the text fileds

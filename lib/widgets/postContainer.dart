@@ -2,11 +2,16 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:poetry_blog_rebuild/models/models.dart';
 
-class PostContainer extends StatelessWidget {
+class PostContainer extends StatefulWidget {
   final Post post;
 
   const PostContainer({Key key, this.post}) : super(key: key);
 
+  @override
+  _PostContainerState createState() => _PostContainerState();
+}
+
+class _PostContainerState extends State<PostContainer> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -38,7 +43,7 @@ class PostContainer extends StatelessWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(10.0),
                     child: CachedNetworkImage(
-                      imageUrl: post.imageUrl,
+                      imageUrl: widget.post.imageUrl,
                       height: 150.0,
                       width: double.infinity,
                       fit: BoxFit.cover,
@@ -50,7 +55,7 @@ class PostContainer extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 18.0),
               child: Text(
-                post.title,
+                widget.post.title,
                 style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
               ),
             ),

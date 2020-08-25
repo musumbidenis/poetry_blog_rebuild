@@ -1,11 +1,8 @@
 import 'dart:convert';
-
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:poetry_blog_rebuild/data/api.dart';
 import 'package:poetry_blog_rebuild/screens/screens.dart';
-import 'package:poetry_blog_rebuild/widgets/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {

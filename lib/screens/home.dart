@@ -11,9 +11,13 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  // Create instance variable
+  Future myFuture;
+
   @override
   void initState() {
     super.initState();
+    myFuture = getPosts();
   }
 
   @override
@@ -65,7 +69,7 @@ class _HomeState extends State<Home> {
         child: ListView(
           children: <Widget>[
             FutureBuilder(
-                future: getPosts(),
+                future: myFuture,
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.hasData) {
                     return Padding(
@@ -110,6 +114,8 @@ class _HomeState extends State<Home> {
                                                 "${snapshot.data[index].title}",
                                             author:
                                                 "${snapshot.data[index].username}",
+                                            description:
+                                                "${snapshot.data[index].description}",
                                           ),
                                         ));
                                   },
@@ -137,7 +143,7 @@ class _HomeState extends State<Home> {
                   );
                 }),
             FutureBuilder(
-                future: getPosts(),
+                future: myFuture,
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.hasData) {
                     return ListView.builder(
@@ -158,6 +164,8 @@ class _HomeState extends State<Home> {
                                         title: "${snapshot.data[index].title}",
                                         author:
                                             "${snapshot.data[index].username}",
+                                        description:
+                                            "${snapshot.data[index].description}",
                                       ),
                                     ));
                               },

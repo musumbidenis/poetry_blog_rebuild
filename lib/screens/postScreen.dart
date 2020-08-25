@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class PostScreen extends StatefulWidget {
-  final String postImageUrl, userImageUrl, title, author;
+  final String postImageUrl, userImageUrl, title, author, description;
   final int likes, comments;
 
   const PostScreen(
@@ -12,7 +12,8 @@ class PostScreen extends StatefulWidget {
       this.title,
       this.author,
       this.likes,
-      this.comments})
+      this.comments,
+      this.description})
       : super(key: key);
 
   @override
@@ -96,8 +97,7 @@ class _PostScreenState extends State<PostScreen> {
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ),
-                                Text(
-                                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla feugiat enim orci, id rhoncus enim lacinia at. Duis eu turpis nibh. Nulla suscipit magna ultricies risus ultrices lobortis. Nunc pharetra nisi urna, cursus molestie enim pulvinar sed. In libero orci, porttitor vel risus sit amet, fermentum elementum leo. Nunc quis purus eget enim auctor mattis vitae ut arcu. Ut auctor sapien id nunc interdum, ac bibendum mauris consectetur. Vestibulum at tempor diam, sit amet consectetur libero. Vivamus ipsum sapien, gravida in augue sed, pulvinar finibus nunc. Suspendisse vulputate dapibus risus, sit amet pulvinar leo dapibus eget. Morbi eu blandit urna.  amet, consectetur adipiscing elit. Nulla feugiat enim orci, id rhoncus enim lacinia at. ",
+                                Text(widget.description,
                                     style: TextStyle(fontSize: 14.0),
                                     textAlign: TextAlign.justify),
                                 Padding(

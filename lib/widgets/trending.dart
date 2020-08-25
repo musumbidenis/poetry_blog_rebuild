@@ -2,11 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:poetry_blog_rebuild/models/models.dart';
 
-class Trending extends StatelessWidget {
+class Trending extends StatefulWidget {
   final Post post;
   final timestamp;
 
   const Trending({Key key, this.post, this.timestamp}) : super(key: key);
+
+  @override
+  _TrendingState createState() => _TrendingState();
+}
+
+class _TrendingState extends State<Trending> {
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -14,7 +20,7 @@ class Trending extends StatelessWidget {
         ClipRRect(
           borderRadius: BorderRadius.circular(12.0),
           child: CachedNetworkImage(
-            imageUrl: post.imageUrl,
+            imageUrl: widget.post.imageUrl,
             height: double.infinity,
             width: 120.0,
             fit: BoxFit.cover,
@@ -40,7 +46,8 @@ class Trending extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 10.0,
-                backgroundImage: CachedNetworkImageProvider(post.imageUrl),
+                backgroundImage:
+                    CachedNetworkImageProvider(widget.post.imageUrl),
               ),
               SizedBox(
                 width: 3.0,
@@ -49,7 +56,7 @@ class Trending extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    post.username,
+                    widget.post.username,
                     style: const TextStyle(
                       fontSize: 12.0,
                       color: Colors.white,
@@ -59,7 +66,7 @@ class Trending extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   Text(
-                    timestamp,
+                    widget.timestamp,
                     style: const TextStyle(
                       fontSize: 10.0,
                       color: Colors.white,

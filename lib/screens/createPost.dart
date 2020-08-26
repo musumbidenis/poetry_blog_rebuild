@@ -206,7 +206,7 @@ class _CreatePostState extends State<CreatePost> {
 
       if (body == 'success') {
         /*Navigate to the Home Screen */
-        Navigator.push(
+        Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => Navigation()));
 
         /**Set loading state of button to false &&

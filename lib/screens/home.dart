@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:poetry_blog_rebuild/models/models.dart';
 import 'package:poetry_blog_rebuild/widgets/widgets.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:poetry_blog_rebuild/data/data.dart';
@@ -13,11 +14,12 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   // Create instance variable
   Future myFuture;
+  Stream stream;
 
   @override
   void initState() {
     super.initState();
-    myFuture = getPosts();
+    stream = getPosts();
   }
 
   @override
@@ -64,129 +66,126 @@ class _HomeState extends State<Home> {
         ],
         elevation: 0.0,
       ),
-      body: RefreshIndicator(
-        onRefresh: getPosts,
-        child: ListView(
-          children: <Widget>[
-            FutureBuilder(
-                future: myFuture,
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  if (snapshot.hasData) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                      child: Container(
-                        height: 200.0,
-                        child: ListView.builder(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 10.0,
-                              horizontal: 8.0,
-                            ),
-                            scrollDirection: Axis.horizontal,
-                            itemCount: snapshot.data.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              // var initial = snapshot.data[index].username;
-                              /*Get the timestamp */
-                              var date = DateTime.parse(
-                                  snapshot.data[index].created_at);
-                              /*Find the difference in time from now in seconds */
-                              var difference =
-                                  DateTime.now().difference(date).inSeconds;
+      body: ListView(
+        children: <Widget>[
+          StreamBuilder(
+              stream: stream,
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.hasData) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                    child: Container(
+                      height: 200.0,
+                      child: ListView.builder(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 10.0,
+                            horizontal: 8.0,
+                          ),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            // var initial = snapshot.data[index].username;
+                            /*Get the timestamp */
+                            var date =
+                                DateTime.parse(snapshot.data[index].created_at);
+                            /*Find the difference in time from now in seconds */
+                            var difference =
+                                DateTime.now().difference(date).inSeconds;
 
-                              /*Format it into time ago */
-                              var timeAgo = DateTime.now()
-                                  .subtract(Duration(seconds: difference));
-                              var timestamp = (timeago.format(timeAgo));
-                              return Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 5.0,
+                            /*Format it into time ago */
+                            var timeAgo = DateTime.now()
+                                .subtract(Duration(seconds: difference));
+                            var timestamp = (timeago.format(timeAgo));
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 5.0,
+                              ),
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => PostScreen(
+                                          postImageUrl:
+                                              "${snapshot.data[index].imageUrl}",
+                                          userImageUrl:
+                                              "${snapshot.data[index].imageUrl}",
+                                          title:
+                                              "${snapshot.data[index].title}",
+                                          author:
+                                              "${snapshot.data[index].username}",
+                                          description:
+                                              "${snapshot.data[index].description}",
+                                        ),
+                                      ));
+                                },
+                                child: Trending(
+                                  post: snapshot.data[index],
+                                  timestamp: timestamp,
                                 ),
-                                child: InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => PostScreen(
-                                            postImageUrl:
-                                                "${snapshot.data[index].imageUrl}",
-                                            userImageUrl:
-                                                "${snapshot.data[index].imageUrl}",
-                                            title:
-                                                "${snapshot.data[index].title}",
-                                            author:
-                                                "${snapshot.data[index].username}",
-                                            description:
-                                                "${snapshot.data[index].description}",
-                                          ),
-                                        ));
-                                  },
-                                  child: Trending(
-                                    post: snapshot.data[index],
-                                    timestamp: timestamp,
-                                  ),
-                                ),
-                              );
-                            }),
-                      ),
-                    );
-                  } else if (snapshot.hasError) {
-                    return Text("${snapshot.error}");
-                  } /*By default, show a loading spinner */
-                  return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        CircularProgressIndicator(),
-                        SizedBox(height: 8.0),
-                        Text("Loading posts..")
-                      ],
+                              ),
+                            );
+                          }),
                     ),
                   );
-                }),
-            FutureBuilder(
-                future: myFuture,
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  if (snapshot.hasData) {
-                    return ListView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: snapshot.data.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => PostScreen(
-                                        postImageUrl:
-                                            "${snapshot.data[index].imageUrl}",
-                                        userImageUrl:
-                                            "${snapshot.data[index].imageUrl}",
-                                        title: "${snapshot.data[index].title}",
-                                        author:
-                                            "${snapshot.data[index].username}",
-                                        description:
-                                            "${snapshot.data[index].description}",
-                                      ),
-                                    ));
-                              },
-                              child: PostContainer(post: snapshot.data[index]));
-                        });
-                  } else if (snapshot.hasError) {
-                    return Text("${snapshot.error}");
-                  } /*By default, show a loading spinner */
-                  return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        CircularProgressIndicator(),
-                        SizedBox(height: 8.0),
-                        Text("Loading posts..")
-                      ],
-                    ),
-                  );
-                }),
-          ],
-        ),
+                } else if (snapshot.hasError) {
+                  return Text("${snapshot.error}");
+                } /*By default, show a loading spinner */
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      CircularProgressIndicator(),
+                      SizedBox(height: 8.0),
+                      Text("Loading posts..")
+                    ],
+                  ),
+                );
+              }),
+          FutureBuilder(
+              future: myFuture,
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.hasData) {
+                  return ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: snapshot.data.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => PostScreen(
+                                      postImageUrl:
+                                          "${snapshot.data[index].imageUrl}",
+                                      userImageUrl:
+                                          "${snapshot.data[index].imageUrl}",
+                                      title: "${snapshot.data[index].title}",
+                                      author:
+                                          "${snapshot.data[index].username}",
+                                      description:
+                                          "${snapshot.data[index].description}",
+                                    ),
+                                  ));
+                            },
+                            child: PostContainer(post: snapshot.data[index]));
+                      });
+                } else if (snapshot.hasError) {
+                  return Text("${snapshot.error}");
+                } /*By default, show a loading spinner */
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      CircularProgressIndicator(),
+                      SizedBox(height: 8.0),
+                      Text("Loading posts..")
+                    ],
+                  ),
+                );
+              }),
+        ],
       ),
     );
   }

@@ -14,12 +14,11 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   // Create instance variable
   Future myFuture;
-  Stream stream;
 
   @override
   void initState() {
     super.initState();
-    stream = getPosts();
+    myFuture = getPosts();
   }
 
   @override
@@ -68,8 +67,8 @@ class _HomeState extends State<Home> {
       ),
       body: ListView(
         children: <Widget>[
-          StreamBuilder(
-              stream: stream,
+          FutureBuilder(
+              future: myFuture,
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.hasData) {
                   return Padding(

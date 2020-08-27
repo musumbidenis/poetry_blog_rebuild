@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 List<Post> posts = [];
 
 /*Fetch the posts */
-Stream getPosts() async* {
+Future<List<Post>> getPosts() async {
   var response = await CallAPi().getData('posts');
   var jsonData = json.decode(response.body);
   print(jsonData);
@@ -25,6 +25,7 @@ Stream getPosts() async* {
 
     posts.add(post);
   }
+  return posts;
 }
 
 void getCurrentUser() async {

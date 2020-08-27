@@ -5,3 +5,4 @@ export 'createPost.dart';
 export 'postScreen.dart';
 export 'register.dart';
 export 'login.dart';
+export 'home1.dart';
